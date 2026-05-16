@@ -11,6 +11,8 @@ on:
 jobs:
     publish:
         runs-on: ubuntu-latest
+        permissions:
+            contents: write
         steps:
             -   name: Checkout repository 🌏
                 uses: actions/checkout@900f2210b1d28bbbd0bd22d17926b9e224e8f231 # v6.0.2
@@ -41,10 +43,10 @@ jobs:
             -   name: Upload artifacts 🌐
                 uses: softprops/action-gh-release@b4309332981a82ec1c5618f44dd2e27cc8bfbfda # v3.0.0
                 with:
-                    repository: Gekkoushi/plugin
+                    repository: renxzen/kotatsu-parsers
                     tag_name: ${{ steps.meta.outputs.sha_short }}
                     name: ${{ steps.meta.outputs.sha_short }}
                     body: |
                         Built from commit [`${{ steps.meta.outputs.sha_short }}`](https://github.com/Gekkoushi/plugin-source/commit/${{ github.sha }})
                     files: build/libs/gekkoushi.jar
-                    token: ${{ secrets.ARTIFACT_REPO_TOKEN }}
+                    token: ${{ secrets.GITHUB_TOKEN }}
